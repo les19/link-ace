@@ -31,10 +31,12 @@ class UserController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        return User::create([
-            'name'     => $request->input('name'),
-            'email'    => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-        ])->only('name', 'email', 'created_at', 'password');
+        return response()->json(
+            User::create([
+                'name'     => $request->input('name'),
+                'email'    => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+            ])->only('name', 'email', 'created_at')
+        );
     }
 }
