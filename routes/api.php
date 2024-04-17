@@ -10,6 +10,8 @@ use App\Http\Controllers\API\SearchController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\TagLinksController;
 use App\Http\Controllers\API\TrashController;
+use App\Http\Controllers\API\UserController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,9 @@ use App\Http\Controllers\API\TrashController;
 
 Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')->group(function () {
+
+        Route::post('user', UserController::class)
+            ->name('api.user');
 
         Route::get('links/check', LinkCheckController::class)
             ->name('api.links.check');
