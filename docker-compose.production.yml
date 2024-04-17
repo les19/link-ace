@@ -16,16 +16,27 @@ services:
       - db:/var/lib/mysql
 
   # --- LinkAce Image with PHP
+  # app:
+  #   image: linkace/linkace:latest
+  #   restart: unless-stopped
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - ./.env:/app/.env
+  #     - ./backups:/app/storage/app/backups
+  #     - linkace_app:/app
+  #     - linkace_logs:/app/storage/logs
+
+  # --- PHP
   app:
-    image: linkace/linkace:latest
-    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./resources/docker/dockerfiles/development.Dockerfile
     depends_on:
       - db
     volumes:
-      - ./.env:/app/.env
-      - ./backups:/app/storage/app/backups
-      - linkace_app:/app
-      - linkace_logs:/app/storage/logs
+      - .:/app:delegated
+      - ./resources/docker/php/php-dev.ini:/usr/local/etc/php/conf.d/php.ini:ro
 
   # --- nginx
   nginx:
