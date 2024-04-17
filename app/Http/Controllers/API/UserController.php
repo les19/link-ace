@@ -28,7 +28,7 @@ class UserController extends Controller
                 'max:255',
                 Rule::unique(User::class),
             ],
-            'password' => $this->passwordRules(),
+            'password' => ['required', 'string'],
         ]);
 
         return User::create([
